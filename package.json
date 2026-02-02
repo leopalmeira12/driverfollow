@@ -1,23 +1,13 @@
 {
-  "name": "antigravity-kit",
-  "version": "2.0.0",
-  "description": "AI Agent templates - Skills, Agents, and Workflows for enhanced coding assistance",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vudovn/antigravity-kit.git"
+  "name": "driverfollow-monorepo",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "npm start --prefix server",
+    "client": "npm run dev --prefix client",
+    "install:all": "npm install concurrently && npm install --prefix client && npm install --prefix server"
   },
-  "homepage": "https://github.com/vudovn/antigravity-kit#readme",
-  "bugs": {
-    "url": "https://github.com/vudovn/antigravity-kit/issues"
-  },
-  "keywords": [
-    "antigravity",
-    "ai",
-    "agent",
-    "gemini",
-    "skills",
-    "templates"
-  ],
-  "author": "vudovn",
-  "license": "MIT"
+  "dependencies": {
+    "concurrently": "^8.2.0"
+  }
 }

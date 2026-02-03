@@ -1,4 +1,5 @@
 # TubeDriver 🚛
+![Status](https://img.shields.io/badge/Status-Online-emerald)
 
 **Acelere seu canal no YouTube com a força da comunidade.**
 

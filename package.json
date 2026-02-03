@@ -8,6 +8,6 @@
     "install:all": "npm install concurrently && npm install --prefix client && npm install --prefix server"
   },
   "dependencies": {
-    "concurrently": "^8.2.0"
+    "concurrently": "^8.2.2"
   }
 }

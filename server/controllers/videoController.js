@@ -90,3 +90,51 @@ exports.getMyVideos = async (req, res) => {
         res.status(500).json({ error: 'Erro ao carregar vídeos.' });
     }
 };
+
+// Get community videos (videos from other users)
+exports.getCommunityVideos = async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit) || 4;
+        let dbVideos = [];
+
+        if (global.HAS_DB) {
+            try {
+                dbVideos = await Video.find({ status: 'active' })
+                    .populate('user', 'name')
+                    .sort({ createdAt: -1 })
+                    .limit(limit * 2); // Get more to filter and randomize
+            } catch (e) {
+                console.log('DB query failed, using memory');
+            }
+        }
+
+        const memVideos = global.memoryVideos.filter(v => v.status === 'active');
+        const allVideos = [...dbVideos, ...memVideos];
+
+        // Map to stable fields
+        const mappedVideos = allVideos.map(v => {
+            const obj = v.toObject ? v.toObject() : v;
+            return {
+                _id: obj._id,
+                youtubeId: obj.youtubeVideoId,
+                thumbnail: obj.thumbnailUrl,
+                title: obj.title,
+                duration: obj.duration || '40:00',
+                durationSeconds: obj.durationSeconds || 2400,
+                owner: obj.user?.name || 'Motorista',
+                completedViews: obj.completedViews || 0,
+                targetViews: obj.targetViews || 100
+            };
+        });
+
+        // Shuffle and limit
+        const shuffled = mappedVideos.sort(() => 0.5 - Math.random());
+        const limited = shuffled.slice(0, limit);
+
+        res.json({ videos: limited });
+
+    } catch (err) {
+        console.error('Error fetching community videos:', err);
+        res.status(500).json({ error: 'Erro ao carregar vídeos da comunidade.' });
+    }
+};

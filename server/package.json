@@ -12,6 +12,7 @@
         "bcryptjs": "^3.0.3",
         "cors": "^2.8.6",
         "dotenv": "^16.6.1",
+        "driverfollow-monorepo": "file:..",
         "express": "^4.22.1",
         "googleapis": "^105.0.0",
         "jsonwebtoken": "^9.0.3",

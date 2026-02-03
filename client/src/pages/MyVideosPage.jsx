@@ -158,7 +158,7 @@ const MyVideosPage = () => {
                                 />
                             </div>
                             <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
-                                <p className="text-xs text-emerald-400"><strong>Custo:</strong> 5 Créditos para entrar na fila de recomendação global.</p>
+                                <p className="text-xs text-emerald-400">✅ Seu vídeo será visto por outros motoristas da comunidade!</p>
                             </div>
                             <button
                                 disabled={isAdding}

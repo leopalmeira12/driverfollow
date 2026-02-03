@@ -11,10 +11,23 @@ if (!global.memoryUsers) global.memoryUsers = [];
 
 exports.register = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, referralCode } = req.body;
         console.log('📝 Registering:', email);
 
+        // Generate unique referral code for new user
+        const newReferralCode = 'TD' + Math.random().toString(36).substr(2, 6).toUpperCase();
+
         let user;
+        let referrer = null;
+
+        // Check if referral code is valid
+        if (referralCode) {
+            if (global.HAS_DB) {
+                referrer = await User.findOne({ referralCode: referralCode.toUpperCase() });
+            } else {
+                referrer = global.memoryUsers.find(u => u.referralCode === referralCode.toUpperCase());
+            }
+        }
 
         if (global.HAS_DB) {
             const existingUser = await User.findOne({ email });
@@ -24,8 +37,16 @@ exports.register = async (req, res) => {
             const hashedPassword = await bcrypt.hash(password, salt);
 
             user = await User.create({
-                name, email, password: hashedPassword, credits: 10, plan: 'free', role: 'driver'
+                name, email, password: hashedPassword, credits: 10, plan: 'free', role: 'driver',
+                referralCode: newReferralCode,
+                referredBy: referrer?._id || null
             });
+
+            // Credit referrer if exists
+            if (referrer) {
+                await User.findByIdAndUpdate(referrer._id, { $inc: { credits: 50 } });
+                console.log('🎁 Referral bonus: +50 CR to', referrer.email);
+            }
         } else {
             // Memory Path
             if (global.memoryUsers.find(u => u.email === email)) return res.status(400).json({ error: 'Email já cadastrado.' });
@@ -36,14 +57,33 @@ exports.register = async (req, res) => {
             user = {
                 _id: 'mem_u_' + Date.now(),
                 name, email, password: hashedPassword, credits: 10, plan: 'free', role: 'driver',
+                referralCode: newReferralCode,
+                referredBy: referrer?._id || null,
                 viewedVideos: []
             };
             global.memoryUsers.push(user);
+
+            // Credit referrer if exists (memory mode)
+            if (referrer) {
+                referrer.credits = (referrer.credits || 0) + 50;
+                console.log('🎁 Referral bonus: +50 CR to', referrer.email);
+            }
+
             console.log('⚠️ Saved to Global Memory (No DB):', user.email);
         }
 
         const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
-        res.status(201).json({ success: true, token, user: { id: user._id, name: user.name, email: user.email, credits: user.credits } });
+        res.status(201).json({
+            success: true,
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                credits: user.credits,
+                referralCode: user.referralCode
+            }
+        });
 
     } catch (err) {
         console.error('Register Error:', err.message);
@@ -109,7 +149,8 @@ exports.getMe = async (req, res) => {
             email: 'parceiro@tubedrivers.com',
             credits: 10,
             plan: 'free',
-            role: 'driver'
+            role: 'driver',
+            referralCode: 'TD' + userId.substr(-6).toUpperCase()
         });
 
     } catch (err) {

@@ -2,27 +2,29 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 
 const AuthContext = createContext();
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [token, setToken] = useState(localStorage.getItem('token'));
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
         if (token) {
             fetchUser(token);
         } else {
             setLoading(false);
         }
-    }, []);
+    }, [token]);
 
-    const fetchUser = async (token) => {
-        const targetToken = token || localStorage.getItem('token');
+    const fetchUser = async (authToken) => {
+        const targetToken = authToken || token;
         if (!targetToken) return;
 
         try {
-            const res = await fetch('/api/auth/me', {
+            const res = await fetch(`${API_URL}/api/auth/me`, {
                 headers: {
                     'x-auth-token': targetToken,
                     'Authorization': `Bearer ${targetToken}`
@@ -44,7 +46,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const res = await fetch('/api/auth/login', {
+            const res = await fetch(`${API_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
@@ -53,7 +55,7 @@ export const AuthProvider = ({ children }) => {
 
             if (data.success) {
                 localStorage.setItem('token', data.token);
-                // The login response might have partial user, let's fetch full profile
+                setToken(data.token);
                 await fetchUser(data.token);
                 return { success: true };
             } else {
@@ -66,7 +68,7 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (userData) => {
         try {
-            const res = await fetch('/api/auth/register', {
+            const res = await fetch(`${API_URL}/api/auth/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(userData)
@@ -75,6 +77,7 @@ export const AuthProvider = ({ children }) => {
 
             if (data.success) {
                 localStorage.setItem('token', data.token);
+                setToken(data.token);
                 await fetchUser(data.token);
                 return { success: true };
             } else {
@@ -87,6 +90,8 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setToken(null);
         setUser(null);
     };
 
@@ -94,7 +99,17 @@ export const AuthProvider = ({ children }) => {
     const refreshUser = () => fetchUser();
 
     return (
-        <AuthContext.Provider value={{ user, login, register, logout, loading, refreshUser }}>
+        <AuthContext.Provider value={{
+            user,
+            token,
+            setUser,
+            setToken,
+            login,
+            register,
+            logout,
+            loading,
+            refreshUser
+        }}>
             {children}
         </AuthContext.Provider>
     );

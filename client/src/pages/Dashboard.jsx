@@ -13,7 +13,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 // FAQ Data
 const FAQ_ITEMS = [
     {
-        question: 'Como funciona a TubeDrivers?',
+        question: 'Como funciona a TubeDriver?',
         answer: 'Você grava vídeos da estrada enquanto dirige, posta no YouTube, e adiciona o link aqui. Outros motoristas assistem seu vídeo e você assiste os deles. Todos crescem juntos!'
     },
     {
@@ -26,7 +26,7 @@ const FAQ_ITEMS = [
     },
     {
         question: 'Quem paga os meus ganhos?',
-        answer: 'O YouTube/Google paga diretamente para você via AdSense. A TubeDrivers não toca no seu dinheiro!'
+        answer: 'O YouTube/Google paga diretamente para você via AdSense. A TubeDriver não toca no seu dinheiro!'
     },
     {
         question: 'Qual o tamanho ideal do vídeo?',
@@ -42,7 +42,7 @@ const FAQ_ITEMS = [
 const TOUR_STEPS = [
     {
         id: 'welcome',
-        title: '👋 Bem-vindo à TubeDrivers!',
+        title: '👋 Bem-vindo à TubeDriver!',
         content: 'Aqui motoristas se ajudam a crescer no YouTube. Vou te mostrar como tudo funciona!',
         target: null, // Intro sem target específico
         position: 'center'
@@ -343,7 +343,7 @@ function Dashboard() {
             <header className="bg-neutral-900/90 border-b border-neutral-800 px-4 py-3 sticky top-0 z-40">
                 <div className="container mx-auto flex justify-between items-center max-w-6xl">
                     <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
-                        <h1 className="font-black text-xl leading-none tracking-tight">TubeDrivers</h1>
+                        <h1 className="font-black text-xl leading-none tracking-tight">TubeDriver</h1>
                     </div>
 
                     <button onClick={handleLogout} className="p-2 text-neutral-500 hover:text-red-500 transition rounded-lg hover:bg-neutral-800">
@@ -405,7 +405,7 @@ function Dashboard() {
                             <span className="text-2xl">🎬</span>
                         </div>
                         <div>
-                            <h3 className="font-bold text-white text-lg">Como Funciona a TubeDrivers?</h3>
+                            <h3 className="font-bold text-white text-lg">Como Funciona a TubeDriver?</h3>
                             <p className="text-xs text-amber-400">É simples: você grava, posta, e a comunidade assiste!</p>
                         </div>
                     </div>

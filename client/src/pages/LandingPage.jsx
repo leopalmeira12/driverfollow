@@ -47,7 +47,7 @@ const LandingPage = () => {
                             <Play className="w-5 h-5 text-white fill-white" />
                         </div>
                         <div>
-                            <span className="text-xl font-black text-white">TubeDrivers</span>
+                            <span className="text-xl font-black text-white">TubeDriver</span>
                             <p className="text-[9px] text-emerald-500 font-medium">Comunidade de Motoristas</p>
                         </div>
                     </div>
@@ -287,7 +287,7 @@ const LandingPage = () => {
                                 <div className="flex items-start gap-3">
                                     <CheckCircle className="w-6 h-6 text-emerald-500 flex-shrink-0 mt-0.5" />
                                     <div>
-                                        <p className="text-white font-bold mb-1">Com a TubeDrivers, isso fica MUITO mais fácil!</p>
+                                        <p className="text-white font-bold mb-1">Com a TubeDriver, isso fica MUITO mais fácil!</p>
                                         <p className="text-neutral-400">
                                             Ao invés de esperar meses para crescer sozinho, nossa comunidade acelera seu canal.
                                             Views reais de motoristas reais! Por isso pedimos que compartilhe com o máximo
@@ -527,10 +527,10 @@ const LandingPage = () => {
                     <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                         <div className="flex items-center gap-2">
                             <Play className="w-5 h-5 text-emerald-500 fill-emerald-500" />
-                            <span className="font-bold text-white">TubeDrivers</span>
+                            <span className="font-bold text-white">TubeDriver</span>
                         </div>
                         <p className="text-neutral-600 text-sm">
-                            © 2026 TubeDrivers. Comunidade de motoristas criadores de conteúdo.
+                            © 2026 TubeDriver. Comunidade de motoristas criadores de conteúdo.
                         </p>
                     </div>
                 </div>

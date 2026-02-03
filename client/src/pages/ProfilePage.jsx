@@ -255,7 +255,7 @@ const ProfilePage = () => {
                             onClick={() => {
                                 if (navigator.share) {
                                     navigator.share({
-                                        title: 'TubeDrivers - Comunidade de Motoristas',
+                                        title: 'TubeDriver - Comunidade de Motoristas',
                                         text: 'Entre na maior comunidade de motoristas criadores de conteúdo!',
                                         url: referralLink
                                     });

@@ -181,7 +181,7 @@ const LoginPage = () => {
                             <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-lg shadow-emerald-500/25">
                                 <Play className="w-6 h-6 text-white fill-white" />
                             </div>
-                            <span className="text-3xl font-black text-white tracking-tight">TubeDrivers</span>
+                            <span className="text-3xl font-black text-white tracking-tight">TubeDriver</span>
                         </div>
                         <p className="text-neutral-500 text-sm ml-[60px]">A comunidade que acelera seu canal</p>
                     </div>
@@ -259,7 +259,7 @@ const LoginPage = () => {
                             <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
                                 <Play className="w-5 h-5 text-white fill-white" />
                             </div>
-                            <span className="text-2xl font-black text-white">TubeDrivers</span>
+                            <span className="text-2xl font-black text-white">TubeDriver</span>
                         </div>
                     </div>
 

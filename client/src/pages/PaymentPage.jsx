@@ -15,7 +15,7 @@ const PaymentPage = () => {
     }, []);
 
     const handleCopyPix = () => {
-        navigator.clipboard.writeText("00020126360014BR.GOV.BCB.PIX0114+55119999999995204000053039865802BR5913TubeDrivers6009Sao Paulo62070503***6304E2CA");
+        navigator.clipboard.writeText("00020126360014BR.GOV.BCB.PIX0114+55119999999995204000053039865802BR5913TubeDriver6009Sao Paulo62070503***6304E2CA");
         alert("Código Pix copiado!");
 
         setTimeout(() => {
